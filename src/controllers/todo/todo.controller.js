@@ -9,4 +9,29 @@ const getTodosController = async (request, response) => {
   }
 };
 
-module.exports = getTodosController;
+const addTodoController = async (request, response) => {
+  try {
+    const todo = new Todo({
+      date: request.body.date,
+      description: request.body.description,
+      email: request.body.email,
+      completed: request.body.completed,
+      title: request.body.title,
+    });
+    todo.save();
+    response.status(200).send(todo);
+  } catch (error) {
+    response.status(500).send(`Server error ${error}`)
+  }
+};
+
+const deleteTodoController = async (request, response) => {
+  try {
+    const todo = await Todo.findByIdAndDelete(request.params.id);
+    response.status(200).send(todo);
+  } catch (error) {
+    response.status(500).send(`Server error ${error}`)
+  }
+};
+
+module.exports = { getTodosController, addTodoController, deleteTodoController };
