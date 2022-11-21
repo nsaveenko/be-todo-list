@@ -5,7 +5,7 @@ const getTodosController = async (request, response) => {
     const todos = await Todo.find();
     response.status(200).send(todos);
   } catch (error) {
-    response.status(500).send(`Server error ${error}`)
+    response.status(500).send(`Server error ${error}`);
   }
 };
 
@@ -21,7 +21,7 @@ const addTodoController = async (request, response) => {
     todo.save();
     response.status(200).send(todo);
   } catch (error) {
-    response.status(500).send(`Server error ${error}`)
+    response.status(500).send(`Server error ${error}`);
   }
 };
 
@@ -30,8 +30,34 @@ const deleteTodoController = async (request, response) => {
     const todo = await Todo.findByIdAndDelete(request.params.id);
     response.status(200).send(todo);
   } catch (error) {
-    response.status(500).send(`Server error ${error}`)
+    response.status(500).send(`Server error ${error}`);
   }
 };
 
-module.exports = { getTodosController, addTodoController, deleteTodoController };
+const updateCompletedTodoController = async (request, response) => {
+  try {
+    const todo = await Todo.findById(request.params.id);
+    todo.completed = !todo.completed;
+    todo.save();
+    response.status(200).send(todo);
+  } catch (error) {
+    response.status(500).send(`Server error ${error}`);
+  }
+};
+
+const updateTodoController = async (request, response) => {
+  try {
+    const todo = await Todo.findByIdAndUpdate(request.params.id, request.body, {new: true});
+    response.status(200).send(todo);
+  } catch (error) {
+    response.status(500).send(`Server error ${error}`);
+  }
+};
+
+module.exports = {
+  getTodosController,
+  addTodoController,
+  deleteTodoController,
+  updateCompletedTodoController,
+  updateTodoController,
+};
