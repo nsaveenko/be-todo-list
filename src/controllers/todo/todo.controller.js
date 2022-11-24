@@ -37,6 +37,7 @@ const deleteTodoController = async (request, response) => {
 const updateCompletedTodoController = async (request, response) => {
   try {
     const todo = await Todo.findById(request.params.id);
+    console.log("put", todo) 
     todo.completed = !todo.completed;
     todo.save();
     response.status(200).send(todo);
@@ -54,10 +55,21 @@ const updateTodoController = async (request, response) => {
   }
 };
 
+const getTodoById = async (request, response) => {
+  try {
+    const todo = await Todo.findById(request.params.id);
+    console.log("get", todo) 
+    response.status(200).send(todo);
+  } catch (error) {
+    response.status(500).send(`Server error ${error}`);
+  }
+};
+
 module.exports = {
   getTodosController,
   addTodoController,
   deleteTodoController,
   updateCompletedTodoController,
   updateTodoController,
+  getTodoById,
 };

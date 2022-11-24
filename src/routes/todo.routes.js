@@ -5,6 +5,7 @@ const {
   deleteTodoController,
   updateCompletedTodoController,
   updateTodoController,
+  getTodoById,
 } = require("../controllers/todo/todo.controller");
 
 const todoRouter = express.Router();
@@ -14,5 +15,6 @@ todoRouter.post("/todo", addTodoController);
 todoRouter.delete("/todo/:id", deleteTodoController);
 todoRouter.put("/todo/completed/:id", updateCompletedTodoController);
 todoRouter.patch("/todo/:id", updateTodoController);
+todoRouter.get("/todo/:id", getTodoById);
 
 module.exports = todoRouter;
