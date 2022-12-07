@@ -1,4 +1,4 @@
-const express = require("express");
+const Router = require("express");
 const {
   getTodosController,
   addTodoController,
@@ -8,7 +8,7 @@ const {
   getTodoById,
 } = require("../controllers/todo/todo.controller");
 
-const todoRouter = express.Router();
+const todoRouter = Router();
 
 todoRouter.get("/todos", getTodosController);
 todoRouter.post("/todo", addTodoController);
