@@ -7,14 +7,15 @@ const {
   updateTodoController,
   getTodoById,
 } = require("../controllers/todo/todo.controller");
+const verifyToken = require("../middleware/auth.middleware")
 
 const todoRouter = Router();
 
-todoRouter.get("/todos", getTodosController);
-todoRouter.post("/todo", addTodoController);
-todoRouter.delete("/todo/:id", deleteTodoController);
-todoRouter.put("/todo/completed/:id", updateCompletedTodoController);
-todoRouter.put("/todo/:id", updateTodoController);
-todoRouter.get("/todo/:id", getTodoById);
+todoRouter.get("/todos", verifyToken, getTodosController);
+todoRouter.post("/todo", verifyToken, addTodoController);
+todoRouter.delete("/todo/:id", verifyToken, deleteTodoController);
+todoRouter.put("/todo/completed/:id", verifyToken, updateCompletedTodoController);
+todoRouter.put("/todo/:id", verifyToken, updateTodoController);
+todoRouter.get("/todo/:id", verifyToken, getTodoById);
 
 module.exports = todoRouter;
