@@ -21,7 +21,7 @@ const generateTokens = async (payload) => {
       refreshToken,
     };
   } catch (error) {
-    console.log(error);
+    return null;
   }
 };
 
@@ -35,7 +35,7 @@ const saveToken = async (userId, refreshToken) => {
     const token = await Token.create({ user: userId, refreshToken });
     return token;
   } catch (error) {
-    console.log(error);
+    return null;
   }
 };
 
@@ -57,9 +57,29 @@ const validateRefreshToken = (token) => {
   }
 };
 
+const removeToken = async (refreshToken) => {
+  try {
+    const tokenData = await Token.deleteOne({ refreshToken });
+    return tokenData;
+  } catch (error) {
+    return null;
+  }
+};
+
+const findToken = async (refreshToken) => {
+  try {
+    const tokenData = await Token.findOne({ refreshToken });
+    return tokenData;
+  } catch (error) {
+    return null;
+  }
+};
+
 module.exports = {
   generateTokens,
   saveToken,
   validateAccessToken,
   validateRefreshToken,
+  removeToken,
+  findToken,
 };

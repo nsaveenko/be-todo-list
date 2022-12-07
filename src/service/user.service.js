@@ -5,7 +5,7 @@ const checkIsUserExist = async (email) => {
     const user = await User.findOne({ email });
     return user;
   } catch (error) {
-    console.log(error);
+    return null;
   }
 };
 
@@ -18,7 +18,7 @@ const saveUser = async (email, password, role) => {
     });
     return user;
   } catch (error) {
-    console.log(error);
+    return null;
   }
 };
 
@@ -27,7 +27,16 @@ const getAllUsers = async () => {
     const users = await User.find();
     return users;
   } catch (error) {
-    console.log(error);
+    return null;
+  }
+}
+
+const findUserById = async (id) => {
+  try {
+    const user = User.findById(id);
+    return user;
+  } catch (error) {
+    return null;
   }
 }
 
@@ -35,4 +44,5 @@ module.exports = {
   checkIsUserExist,
   saveUser,
   getAllUsers,
+  findUserById,
 };
