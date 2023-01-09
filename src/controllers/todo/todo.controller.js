@@ -1,15 +1,15 @@
 const Todo = require("../../models/Todo");
 
-const getTodosController = async (request, response) => {
+const getTodos = async (request, response) => {
   try {
     const todos = await Todo.find();
-    response.status(200).send(todos);
+    response.send(todos);
   } catch (error) {
-    response.status(500).send(`Server error ${error}`);
+    response.send(`Server error ${error}`);
   }
 };
 
-const addTodoController = async (request, response) => {
+const addTodo = async (request, response) => {
   try {
     const todo = new Todo({
       date: request.body.date,
@@ -18,56 +18,56 @@ const addTodoController = async (request, response) => {
       completed: request.body.completed,
       title: request.body.title,
     });
-    todo.save();
-    response.status(200).send(todo);
+    await todo.save();
+    response.send(todo);
   } catch (error) {
-    response.status(500).send(`Server error ${error}`);
+    response.send(`Server error ${error}`);
   }
 };
 
-const deleteTodoController = async (request, response) => {
+const deleteTodo = async (request, response) => {
   try {
     const todo = await Todo.findByIdAndDelete(request.params.id);
-    response.status(200).send(todo);
+    response.send(todo);
   } catch (error) {
-    response.status(500).send(`Server error ${error}`);
+    response.send(`Server error ${error}`);
   }
 };
 
-const updateCompletedTodoController = async (request, response) => {
+const updateCompletedTodo = async (request, response) => {
   try {
     const todo = await Todo.findById(request.params.id);
     todo.completed = !todo.completed;
-    todo.save();
-    response.status(200).send(todo);
+    await todo.save();
+    response.send(todo);
   } catch (error) {
-    response.status(500).send(`Server error ${error}`);
+    response.send(`Server error ${error}`);
   }
 };
 
-const updateTodoController = async (request, response) => {
+const updateTodo = async (request, response) => {
   try {
     const todo = await Todo.findByIdAndUpdate(request.params.id, request.body, {new: true});
-    response.status(200).send(todo);
+    response.send(todo);
   } catch (error) {
-    response.status(500).send(`Server error ${error}`);
+    response.send(`Server error ${error}`);
   }
 };
 
 const getTodoById = async (request, response) => {
   try {
     const todo = await Todo.findById(request.params.id);
-    response.status(200).send(todo);
+    response.send(todo);
   } catch (error) {
-    response.status(500).send(`Server error ${error}`);
+    response.send(`Server error ${error}`);
   }
 };
 
 module.exports = {
-  getTodosController,
-  addTodoController,
-  deleteTodoController,
-  updateCompletedTodoController,
-  updateTodoController,
+  getTodos,
+  addTodo,
+  deleteTodo,
+  updateCompletedTodo,
+  updateTodo,
   getTodoById,
 };
