@@ -13,6 +13,7 @@ const {
   findUserById,
 } = require("../../service/user.service");
 const UserDto = require("../../dtos/user.dto");
+const { PASSWORD_NOT_PROVIDED } = require("../../constants/errors");
 
 const signup = async (request, response) => {
   try {
@@ -24,6 +25,10 @@ const signup = async (request, response) => {
       return response
         .status(404)
         .send({ message: `User with this email: ${email} already exists.` });
+    }
+
+    if (!password) {
+      throw new Error(PASSWORD_NOT_PROVIDED);
     }
 
     const hashPassword = await bcrypt.hash(password, 3);
